@@ -51,10 +51,10 @@ class FFT {
 		var ts = [for (i in 0...n) if (i < input.length) input[i] else Complex.zero];
 		var fs = [for (_ in 0...n) Complex.zero];
 
-		if (inverse && twiddleFactorsInversed?.length != n)
-			precomputeTwiddleFactors(n, true);
-		else if (!inverse && twiddleFactors?.length != n)
-			precomputeTwiddleFactors(n, false);
+		if (inverse && (twiddleFactorsInversed == null || twiddleFactorsInversed.length != n))
+		    precomputeTwiddleFactors(n, true);
+		else if (!inverse && (twiddleFactors == null || twiddleFactors.length != n))
+		    precomputeTwiddleFactors(n, false);
 
 		ditfft4(ts, 0, fs, 0, n, 1, inverse);
 		return inverse ? fs.map(z -> z.scale(1 / n)) : fs;
